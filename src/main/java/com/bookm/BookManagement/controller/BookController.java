@@ -39,6 +39,13 @@ public class BookController {
 		return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
 	}
 
+	@PutMapping("/books/{genreId}/{publisherId}/{book_id}")
+	public ResponseEntity<BookModel> updateBook(@PathVariable Long genreId, @PathVariable Long publisherId,
+			@PathVariable Long book_id, @RequestBody BookModel updatedBook) {
+		BookModel savedBook = bookService.updateBook(genreId, publisherId, book_id, updatedBook);
+		return new ResponseEntity<>(savedBook, HttpStatus.OK);
+	}
+
 	@GetMapping("/books/{id}")
 	public ResponseEntity<BookModel> getBookById(@PathVariable(value = "id") Long book_id) {
 		BookModel book = bookService.getBookById(book_id);
@@ -65,12 +72,12 @@ public class BookController {
 //        bookService.deleteAllBooks();
 //        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //    }
-	@PutMapping("/books/{id}")
-	public ResponseEntity<BookModel> updateBook(@PathVariable Long id, @RequestBody BookModel book) {
-		book.setBook_id(id);
-		BookModel updatedBook = bookService.updateBook(book);
-		return new ResponseEntity<>(updatedBook, HttpStatus.OK);
-	}
+//	@PutMapping("/books/{id}")
+//	public ResponseEntity<BookModel> updateBook(@PathVariable Long id, @RequestBody BookModel book) {
+//		book.setBook_id(id);
+//		BookModel updatedBook = bookService.updateBook(book);
+//		return new ResponseEntity<>(updatedBook, HttpStatus.OK);
+//	}
 
 	@Autowired
 	private GenreRepository genreRepository;

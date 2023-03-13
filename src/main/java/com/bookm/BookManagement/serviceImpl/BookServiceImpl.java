@@ -26,15 +26,30 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private EntityManager entityManager;
 
-	@Override 
-	public BookModel addBook(Long genereId, Long publisherId, BookModel book) 
-	{ 
+	@Override
+	public BookModel addBook(Long genereId, Long publisherId, BookModel book) {
 		Publisher publisher = publisherRepository.findById(publisherId).get();
-		Genre genre=genreRepository.findById(genereId).get();
+		Genre genre = genreRepository.findById(genereId).get();
 		book.setPublisher(publisher);
 		book.setGenre(genre);
 		return bookRepository.save(book);
-		}
+	}
+
+//	@Override
+//	public BookModel updateBook(Long genreId, Long publisherId,Long id, BookModel updatedBook) {
+//		// TODO Auto-generated method stub
+//		BookModel book = bookRepository.findById(id)
+//	            .orElseThrow(() -> new ResourceNotFoundException("Book not found with ID " + id));
+//	    Publisher publisher = publisherRepository.findById(publisherId).get();
+//		Genre genre=genreRepository.findById(genreId).get();
+//		book.setPublisher(publisher);
+//		book.setGenre(genre);
+//	    book.setBook_name(updatedBook.getBook_name());
+//	    book.setBook_author(updatedBook.getBook_author());
+//	    book.setBook_ratings(updatedBook.getBook_ratings());
+//
+//	    return bookRepository.save(book);
+//	}
 
 	@Override
 	public BookModel getBookById(Long book_id) {
@@ -52,15 +67,15 @@ public class BookServiceImpl implements BookService {
 		bookRepository.deleteById(book_id);
 	}
 
-	@Override
-	public BookModel updateBook(BookModel book) {
-		if (bookRepository.existsById(book.getBook_id())) {
-			BookModel updatedBook = bookRepository.save(book);
-			return updatedBook;
-		}
-		return book;
-
-	}
+//	@Override
+//	public BookModel updateBook(BookModel book) {
+//		if (bookRepository.existsById(book.getBook_id())) {
+//			BookModel updatedBook = bookRepository.save(book);
+//			return updatedBook;
+//		}
+//		return book;
+//
+//	}
 
 //	  @Override
 //	    public void deleteAllBooks() {
@@ -77,4 +92,18 @@ public class BookServiceImpl implements BookService {
 		return publisherRepository.findAll();
 	}
 
+	@Override
+	public BookModel updateBook(Long genreId, Long publisherId, Long book_id, BookModel updatedBook) {
+		// TODO Auto-generated method stub
+		BookModel book = bookRepository.findById(book_id)
+				.orElseThrow(() -> new ResourceNotFoundException("Book not found with ID " + book_id));
+		Publisher publisher = publisherRepository.findById(publisherId).get();
+		Genre genre = genreRepository.findById(genreId).get();
+		book.setPublisher(publisher);
+		book.setGenre(genre);
+		book.setBook_name(updatedBook.getBook_name());
+		book.setBook_author(updatedBook.getBook_author());
+		book.setBook_ratings(updatedBook.getBook_ratings());
+		return bookRepository.save(book);
+	}
 }

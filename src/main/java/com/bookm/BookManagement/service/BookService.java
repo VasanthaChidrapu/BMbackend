@@ -15,11 +15,15 @@ public interface BookService {
 
 	public void deleteBook(Long book_id);
 
-	public BookModel updateBook(BookModel book);
+//	public BookModel updateBook(BookModel book);
 
 	// public void deleteAllBooks();
 	public List<Genre> getAllGenres();
 
 	public List<Publisher> getAllPublishers();
+
+	// public BookModel updateBook(Long id, BookModel updatedBook);
+
+	public BookModel updateBook(Long genreId, Long publisherId, Long book_id, BookModel updatedBook);
 
 }
